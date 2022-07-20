@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ShortController extends Controller
 {
-    public function short(Request $request)
+    public function short(ShortUrl $request)
     {
         if ($request->original_url) {
             $newUrl = ShortUrl::create([
@@ -18,10 +18,14 @@ class ShortController extends Controller
                 $newUrl->update([
                     'short_url' => $short_url
                 ]);
-
-                return back();
+                return redirect()->back()->with('success_message','Your Short url:  <a href="'. url($short_url) . '">'. url($short_url).'</a> ') ; 
             }
         }
         return back();
+    }
+
+    public function show($code)
+    {
+        dd($code);
     }
 }
